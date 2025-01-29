@@ -17,6 +17,9 @@ let VERSION = {
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+ 	<h3>v0.1.0.3</h3><br>
+		- Added 2 new Upgrades.<br>
+		- Changed Endgame Oncemore.<br>
 	<h3>v0.0.0.3</h3><br>
 		- Soil added.<br>
 	<h3>v0.0.0.2</h3><br>
@@ -44,8 +47,9 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
-
 	let gain = new Decimal(1)
+	if (hasUpgrade('s', 11)) gain = gain.times(2)
+	if (hasUpgrade('s', 12)) gain = gain.times(2)
 	return gain
 }
 
@@ -59,7 +63,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("1000"))
+	return player.points.gte(new Decimal("1e6"))
 }
 
 

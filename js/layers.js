@@ -1,8 +1,15 @@
 addLayer("s", {
     upgrades: {
         11: {
-            description: "More Grass 1.5x Grass",
-            name: "b",
+            title: "More Grass",
+            description: "Double your grass gain.",
+            cost: new Decimal(1),
+        },
+        12: {
+            title: "Grass Seeds",
+            description: "Double your grass gain again.",
+            cost: new Decimal(3),
+            unlocked() { return hasUpgrade('s', 11) },   
         },
     },
     name: "soil", // This is optional, only used in a few places, If absent it just uses the layer id.
