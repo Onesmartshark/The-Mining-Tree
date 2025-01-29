@@ -1,25 +1,27 @@
 let modInfo = {
 	name: "The Mining Tree",
-	author: "nobody",
-	pointsName: "points",
+	author: "Onesmartshark, Amaano675",
+	pointsName: "grass",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.0.0.2",
+	name: "Smol fixes",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v0.0.0.1</h3><br>
+		- Small fixes.<br>
+	<h3>v0.0.0.1</h3><br>
+		- Name fix.<br>
+		- Endgame change.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -55,7 +57,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("1"))
+	return player.points.gte(new Decimal("1000"))
 }
 
 
