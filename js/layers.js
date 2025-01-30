@@ -34,12 +34,14 @@ addLayer("s", {
         12: {
             title: "Even More Grass",
             description: "1.5x your Grass gain.",
-            cost: new Decimal(1),
+            cost: new Decimal(2),
+            unlocked() { return hasUpgrade("s", 11) },
         },
         13: {
             title: "Shovel: Extra Small",
             description: "2.5x your Soil gain.",
-            cost: new Decimal(1),
+            cost: new Decimal(5),
+            unlocked() { return hasUpgrade("s", 12) },
         },
     },
     layerShown(){return true}
