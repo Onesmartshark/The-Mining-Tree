@@ -15,6 +15,7 @@ addLayer("s", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasUpgrade('s', 13)) mult = mult.times(2.5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -27,7 +28,17 @@ addLayer("s", {
     upgrades: {
         11: {
             title: "More Grass",
-            description: "Double your grass gain.",
+            description: "Double your Grass gain.",
+            cost: new Decimal(1),
+        },
+        12: {
+            title: "Even More Grass",
+            description: "1.5x your Grass gain.",
+            cost: new Decimal(1),
+        },
+        13: {
+            title: "Shovel: Extra Small",
+            description: "2.5x your Soil gain.",
             cost: new Decimal(1),
         },
     },
