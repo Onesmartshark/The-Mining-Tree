@@ -26,8 +26,9 @@ addLayer("s", {
     ],
     upgrades: {
         11: {
-            description: "More Grass 1.5x Grass",
-            name: "b",
+            title: "More Grass",
+            description: "Double your grass gain.",
+            cost: new Decimal(1),
         },
     },
     layerShown(){return true}
