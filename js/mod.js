@@ -12,19 +12,22 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.0.4",
-	name: "Ugrades+",
+	num: "0.1.2",
+	name: "Ugrades again",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
- 	<h3>v0.0.0.4</h3><br>
+	<h3>v0.1.2</h3><br>
+		- Fixed soil.<br>
+		- Added another upgrade.<br>
+ 	<h3>v0.1.1</h3><br>
 		- Added 2 new Upgrades.<br>
 		- Changed Endgame Once more.<br>
-	<h3>v0.0.0.3</h3><br>
+	<h3>v0.1</h3><br>
 		- Soil added.<br>
-	<h3>v0.0.0.2</h3><br>
+	<h3>v0.0.2/h3><br>
 		- Small fixes.<br>
-	<h3>v0.0.0.1</h3><br>
+	<h3>v0.0.1</h3><br>
 		- Name fix.<br>
 		- Endgame change.`
 

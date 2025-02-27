@@ -6,7 +6,7 @@ addLayer("s", {
         unlocked: false,
 		points: new Decimal(0),
     }},
-    color: "#4BDC13",
+    color: "#873e23",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "soil", // Name of prestige currency
     baseResource: "grass", // Name of resource prestige is based on
@@ -15,7 +15,7 @@ addLayer("s", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-        if (hasUpgrade('s', 13)) mult = mult.times(2.5)
+        if (hasUpgrade('s', 13)) mult = mult.times(1.5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -38,10 +38,16 @@ addLayer("s", {
             unlocked() { return hasUpgrade("s", 11) },
         },
         13: {
-            title: "Shovel: Extra Small",
-            description: "2.5x your Soil gain.",
+            title: "Extra Small Shovel",
+            description: "1.5x your Soil gain.",
             cost: new Decimal(5),
             unlocked() { return hasUpgrade("s", 12) },
+        },
+        14: {
+            title: "Dirty Wood",
+            description: "Unlock wood.",
+            cost: new Decimal(10),
+            unlocked() { return hasUpgrade("s", 13) },
         },
     },
     layerShown(){return true}
