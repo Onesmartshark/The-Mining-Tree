@@ -12,14 +12,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1.0.3",
-	name: "Soil added",
+	num: "0.0.0.4",
+	name: "Ugrades+",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
- 	<h3>v0.1.0.3</h3><br>
+ 	<h3>v0.0.0.4</h3><br>
 		- Added 2 new Upgrades.<br>
-		- Changed Endgame Oncemore.<br>
+		- Changed Endgame Once more.<br>
 	<h3>v0.0.0.3</h3><br>
 		- Soil added.<br>
 	<h3>v0.0.0.2</h3><br>
@@ -49,7 +49,7 @@ function getPointGen() {
 		return new Decimal(0)
 	let gain = new Decimal(1)
 	if (hasUpgrade('s', 11)) gain = gain.times(2)
-	if (hasUpgrade('s', 12)) gain = gain.times(1.5)
+	if (hasUpgrade('s', 12)) gain = gain.times(2)
 	return gain
 }
 
@@ -63,7 +63,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("1e5"))
+	return player.points.gte(new Decimal("1e6"))
 }
 
 
