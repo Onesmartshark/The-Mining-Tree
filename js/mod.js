@@ -12,11 +12,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1.4",
-	name: "Many upgrades",
+	num: "0.2.0",
+	name: "Wooden Update!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.1.4</h3><br>
+		- Added wood!<br>
+		- Added choice layer!<br>
 	<h3>v0.1.4</h3><br>
 		- Changed an upgrade.<br>
 		- Added 3 upgrades.<br>
@@ -63,6 +66,7 @@ function getPointGen() {
 	if (hasUpgrade('s', 21)) gain = gain.times(2)
 	if (hasUpgrade('s', 23)) gain = gain.times(2)
 	if (hasUpgrade('w', 11)) gain = gain.times(2)
+	if (hasUpgrade('ch', 13)) gain = gain.times(2)
 	return gain
 }
 
