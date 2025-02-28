@@ -86,6 +86,7 @@ addLayer("w", {
         unlocked: false,
 		points: new Decimal(0),
     }},
+    branches: ['s'],
     color: "#873e23",
     requires: new Decimal(100), // Can be a function that takes requirement increases into account
     resource: "wood", // Name of prestige currency
