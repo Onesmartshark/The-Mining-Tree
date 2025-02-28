@@ -12,11 +12,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1.2",
-	name: "Ugrades again",
+	num: "0.1.4",
+	name: "Many upgrades",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h3>v0.1.4</h3><br>
+		- Changed an upgrade.<br>
+		- Added 3 upgrades.<br>
+	<h3>v0.1.3</h3><br>
+		- Changed some upgrades.<br>
+		- Added another upgrade.<br>
 	<h3>v0.1.2</h3><br>
 		- Fixed soil.<br>
 		- Added another upgrade.<br>
@@ -52,7 +58,11 @@ function getPointGen() {
 		return new Decimal(0)
 	let gain = new Decimal(1)
 	if (hasUpgrade('s', 11)) gain = gain.times(2)
-	if (hasUpgrade('s', 12)) gain = gain.times(2)
+	if (hasUpgrade('s', 12) && !hasUpgrade('s',21)) gain = gain.times(1.5)
+	if (hasUpgrade('s', 14)) gain = gain.times(2)
+	if (hasUpgrade('s', 21)) gain = gain.times(2)
+	if (hasUpgrade('s', 23)) gain = gain.times(2)
+	if (hasUpgrade('w', 11)) gain = gain.times(2)
 	return gain
 }
 
