@@ -17,6 +17,7 @@ addLayer("s", {
         mult = new Decimal(1)
         if (hasUpgrade('s', 13)) mult = mult.times(2)
         if (hasUpgrade('s', 22)) mult = mult.times(2)
+        if (hasUpgrade('w', 22)) mult = mult.times(2)
         if (hasUpgrade('ch', 11)) mult = mult.times(2)
         return mult
     },
@@ -91,11 +92,14 @@ addLayer("w", {
     requires: new Decimal(100), // Can be a function that takes requirement increases into account
     resource: "wood", // Name of prestige currency
     baseResource: "soil", // Name of resource prestige is based on
-    baseAmount() {return player.points}, // Get the current amount of baseResource
+    baseAmount() {return player.s.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasUpgrade('w', 13)) mult = mult.times(1.5)
+        if (hasUpgrade('w', 14)) mult = mult.times(1.25)
+        if (hasUpgrade('w', 21)) mult = mult.times(2)
         if (hasUpgrade('ch', 11)) mult = mult.times(2)
         if (hasUpgrade('ch', 12)) mult = mult.times(2)
         if (hasUpgrade('ch', 13)) mult = mult.times(2)
@@ -117,9 +121,113 @@ addLayer("w", {
         },
         12: {
             title: "Selection",
-            description: "Unlock the choice layer and your first permanent choice.",
+            description: "Unlock the choice layer and your first permanent choice. You can pick a tree type!",
             cost: new Decimal(2),
             unlocked() { return hasUpgrade("w", 11) },
+        },
+        13: {
+            title: "Planks",
+            description: "Create some planks out of excess wood. x1.5 Wood!",
+            cost: new Decimal(5),
+            unlocked() { return hasUpgrade('ch', 11) || hasUpgrade("ch", 12) || hasUpgrade("ch", 13) || hasUpgrade("ch", 14) },
+        },
+        14: {
+            title: "Sticks",
+            description: "Create some sticks out of excess planks. x1.25 Wood!",
+            cost: new Decimal(8),
+            unlocked() { return hasUpgrade("w", 13) },
+        },
+        21: {
+            title: "Axe",
+            description: "Create a wooden axe. x2 Wood!",
+            cost: new Decimal(20),
+            unlocked() { return hasUpgrade("w", 14) },
+        },
+        22: {
+            title: "Shovel",
+            description: "Create a wooden shovel. x2 Soil!",
+            cost: new Decimal(20),
+            unlocked() { return hasUpgrade("w", 14) },
+        },
+        23: {
+            title: "Pickaxe",
+            description: "Create a wooden pickaxe. Unlock stone (soon)",
+            cost: new Decimal(20),
+            unlocked() { return hasUpgrade("w", 14) },
+        },
+    },
+    layerShown(){return player.w.unlocked || hasUpgrade("s",24)}
+})
+addLayer("st", {
+    name: "stone", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "St", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: false,
+		points: new Decimal(0),
+    }},
+    branches: ['w'],
+    color: "#873e23",
+    requires: new Decimal(25), // Can be a function that takes requirement increases into account
+    resource: "stone", // Name of prestige currency
+    baseResource: "wood", // Name of resource prestige is based on
+    baseAmount() {return player.w.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        if (hasUpgrade('w', 21)) mult = mult.times(2)
+        if (hasUpgrade('ch', 12)) mult = mult.times(2)
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 1, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "S", description: "Shift+S: Reset for stone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ],
+    upgrades: {
+        11: {
+            title: "Rock Types",
+            description: "Unlocks another choice.",
+            cost: new Decimal(1),
+        },
+        12: {
+            title: "Mossy Rocks",
+            description: "Unlock the choice layer and your first permanent choice. You can pick a tree type!",
+            cost: new Decimal(2),
+            unlocked() { return hasUpgrade("w", 11) },
+        },
+        13: {
+            title: "Planks",
+            description: "Create some planks out of excess wood. x1.5 Wood!",
+            cost: new Decimal(5),
+            unlocked() { return hasUpgrade('ch', 11) || hasUpgrade("ch", 12) || hasUpgrade("ch", 13) || hasUpgrade("ch", 14) },
+        },
+        14: {
+            title: "Sticks",
+            description: "Create some sticks out of excess planks. x1.25 Wood!",
+            cost: new Decimal(8),
+            unlocked() { return hasUpgrade("w", 13) },
+        },
+        21: {
+            title: "Axe",
+            description: "Create a wooden axe. x2 Wood!",
+            cost: new Decimal(20),
+            unlocked() { return hasUpgrade("w", 14) },
+        },
+        22: {
+            title: "Shovel",
+            description: "Create a wooden shovel. x2 Soil!",
+            cost: new Decimal(20),
+            unlocked() { return hasUpgrade("w", 14) },
+        },
+        23: {
+            title: "Pickaxe",
+            description: "Create a wooden pickaxe. Unlock stone (soon)",
+            cost: new Decimal(20),
+            unlocked() { return hasUpgrade("w", 14) },
         },
     },
     layerShown(){return player.w.unlocked || hasUpgrade("s",24)}
@@ -179,6 +287,30 @@ addLayer("ch", {
             cost: new Decimal(0),
             unlocked() { return hasUpgrade('w', 12) && !hasUpgrade("ch", 11) && !hasUpgrade("ch", 12) && !hasUpgrade("ch", 13)}, 
         },
+        21: {
+            title: "Basic",
+            description: "Quadruple stone gain.",
+            cost: new Decimal(0),
+            unlocked() { return hasUpgrade('st', 11) && !hasUpgrade("ch", 22) && !hasUpgrade("ch", 23) && !hasUpgrade("ch", 24)}, 
+        },
+        22: {
+            title: "Mossy",
+            description: "Double grass and stone gain.",
+            cost: new Decimal(0),
+            unlocked() { return hasUpgrade('st', 11) && !hasUpgrade("ch", 21) && !hasUpgrade("ch", 23) && !hasUpgrade("ch", 24)}, 
+        },
+        23: {
+            title: "Dirty",
+            description: "Double soil and stone gain.",
+            cost: new Decimal(0),
+            unlocked() { return hasUpgrade('st', 11) && !hasUpgrade("ch", 21) && !hasUpgrade("ch", 22) && !hasUpgrade("ch", 24)}, 
+        },
+        24: {
+            title: "Placeholder_Wood_Rock",
+            description: "Double wood and stone gain.",
+            cost: new Decimal(0),
+            unlocked() { return hasUpgrade('st', 11) && !hasUpgrade("ch", 21) && !hasUpgrade("ch", 22) && !hasUpgrade("ch", 23)}, 
+        },
     },
 })
 
@@ -194,123 +326,9 @@ addLayer("a", {
     },
     achievements: {
         11: {
-            name: "Growth",
-            done() { return player.d.points.gt(0) },
-            tooltip: "Perform a Dirt reset.",
-            image: "",
-        },
-        12: {
-            name: "Grass Grower",
-            done() { return player.points.gte(1000) },
-            tooltip: "Reach 1,000 Grass.",
-            image: "",
-        },
-        13: {
-            name: "Stonify",
+            name: "Basics",
             done() { return player.s.points.gt(0) },
-            tooltip: "Obtain stone. Reward: 1.25x Dirt",
-            image: "",
-        },
-        14: {
-            name: "Dirt+",
-            done() { return hasUpgrade('d', 21) },
-            tooltip: "Buy Dirt Upgrade 5.",
-            image: "",
-        },
-        21: {
-            name: "Clayify",
-            done() { return player.c.points.gt(0) },
-            tooltip: "Obtain clay.",
-            image: "",
-        },
-        22: {
-            name: "Slated",
-            done() { return player.sl.points.gte(3) },
-            tooltip: "Obtain 3 slate.",
-            image: "",
-        },
-        23: {
-            name: "Blackstone",
-            done() { return player.co.points.gt(0) },
-            tooltip: "Obtain coal. Reward: x1.25 Stone",
-            image: "",
-        },
-        24: {
-            name: "Slate^2",
-            done() { return player.sl.points.gte(9) },
-            tooltip: "Get 9 slate.",
-            image: "",
-        },
-        31: {
-            name: "Wasteland",
-            done() { return hasUpgrade('co', 14) },
-            tooltip: "Buy Polluted.",
-            image: "",
-        },
-        32: {
-            name: "Cooked",
-            done() { return player.g.points.gt(0) },
-            tooltip: "Obtain Glass.",
-            image: "",
-        },
-        33: {
-            name: "Sprouted",
-            done() { return player.t.points.gt(0) },
-            tooltip: "Reset for trees.",
-            image: "",
-        },
-        34: {
-            name: "Compressed Dirt",
-            done() { return player.d.points.gte(100000) },
-            tooltip: "Obtain 100,000 dirt.",
-            image: "",
-        },
-        41: {
-            name: "Glass Coating",
-            done() { return player.g.points.gte(3) },
-            tooltip: "Obtain 3 glass.",
-            image: "",
-        },
-        42: {
-            name: "Unpurity",
-            done() { return player.i.points.gt(0) },
-            tooltip: "Reset for iron. Reward: x1.25 Coal",
-            image: "",
-        },
-        43: {
-            name: "Choosing",
-            done() { return hasChallenge('i', 12) },
-            tooltip: "Unlock permanent choices.",
-            image: "",
-        },
-        44: {
-            name: "Slate^3",
-            done() { return player.sl.points.gte(27) },
-            tooltip: "Reach 27 slate. Reward: Slate no longer resets anything.",
-            image: "",
-        },
-        51: {
-            name: "Fruity",
-            done() { return player.f.points.gt(0) },
-            tooltip: "Reset for fruit. Reward: x1.25 Trees",
-            image: "",
-        },
-        52: {
-            name: "Fertilizer",
-            done() { return player.cm.points.gt(0) },
-            tooltip: "Reset for compost. Reward: x1.25 Fruit",
-            image: "",
-        },
-        53: {
-            name: "Steelizer",
-            done() { return player.st.points.gt(0) },
-            tooltip: "Reset for steel. Reward: x1.25 Iron",
-            image: "",
-        },
-        54: {
-            name: "Supercompost",
-            done() { return player.cm.points.gte(100) },
-            tooltip: "Obtain 100 compost. Reward: x1.25 Compost",
+            tooltip: "Perform a Soil reset.",
             image: "",
         },
     },

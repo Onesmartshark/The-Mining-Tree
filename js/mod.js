@@ -12,14 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.2.0",
-	name: "Wooden Update!",
+	num: "0.2.1",
+	name: "Choosing Update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.1.4</h3><br>
-		- Added wood!<br>
+	<h3>v0.2.1</h3><br>
+		- Added many more upgrades to wood.<br>
 		- Added choice layer!<br>
+	<h3>v0.2.0</h3><br>
+		- Added wood!<br>
 	<h3>v0.1.4</h3><br>
 		- Changed an upgrade.<br>
 		- Added 3 upgrades.<br>
